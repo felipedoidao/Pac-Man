@@ -41,8 +41,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static World world;
 	public static Player player;
 
-	public static int num_moedas = 0;
 	public static int pontos = 0;
+	public static int num_moedas = 0;
+	
 	
 	public Ui ui;
 	
@@ -167,20 +168,19 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_D ){
-			player.hori_dir = 1;
-
-		}else if(e.getKeyCode() == KeyEvent.VK_A){
-			player.hori_dir = -1;
-		}
-		
-		if(e.getKeyCode() == KeyEvent.VK_W ){
-			player.vert_dir = -2;
-			
-		}else if(e.getKeyCode() == KeyEvent.VK_S) {
-			player.vert_dir = 2;
-				
-		}
+		if(e.getKeyCode() == KeyEvent.VK_D){
+            player.desiredHoriDir = 1;
+            player.desiredVertDir = 0;
+        } else if(e.getKeyCode() == KeyEvent.VK_A){
+            player.desiredHoriDir = -1;
+            player.desiredVertDir = 0;
+        } else if(e.getKeyCode() == KeyEvent.VK_W){
+            player.desiredVertDir = -2;
+            player.desiredHoriDir = 0;
+        } else if(e.getKeyCode() == KeyEvent.VK_S){
+            player.desiredVertDir = 2;
+            player.desiredHoriDir = 0;
+        }
 	
 	}
 

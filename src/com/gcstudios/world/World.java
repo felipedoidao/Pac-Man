@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import com.gcstudios.entities.Enemy;
 import com.gcstudios.entities.Entity;
 import com.gcstudios.entities.Moeda;
 import com.gcstudios.main.Game;
@@ -118,6 +119,8 @@ public class World {
 
 					}else if(pixelAtual == 0xFFFF0000) {
 						//Instanciar inimigo e adicionar a lista das entities
+						Enemy enemy = new Enemy(xx*16, yy*16, 16, 16, 1, Entity.ENEMY);
+						Game.entities.add(enemy);
 
 					}else if(pixelAtual == 0xFFFFE900) {
 						Moeda moeda = new Moeda(xx*16, yy*16, 16, 16, 0, Entity.MOEDA);

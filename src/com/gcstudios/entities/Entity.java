@@ -16,6 +16,7 @@ import com.gcstudios.world.World;
 public class Entity {
 
 	public static BufferedImage MOEDA = Game.spritesheet.getSprite(16, 16, 16, 16);
+	public static BufferedImage ENEMY = Game.spritesheet.getSprite(0, 16, 16, 16);
 
 	protected double x;
 	protected double y;

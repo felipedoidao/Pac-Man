@@ -11,7 +11,9 @@ public class Player extends Entity{
 	
 	public boolean right,up,left,down;
 	public int hori_dir = 0, vert_dir = 0,  sprite_dir = 0;
-	public boolean moved_hori = false, moved_vert = false;
+
+	public int desiredHoriDir = 0;
+    public int desiredVertDir = 0;
 
 	public BufferedImage sprite_left, sprite_up, sprite_down;
 
@@ -32,27 +34,36 @@ public class Player extends Entity{
 
 	public void movePlayer(){
 
+        if (desiredHoriDir != 0 && World.isFree((int)(x + speed * desiredHoriDir), this.getY())) {
+            hori_dir = desiredHoriDir;
+            vert_dir = 0;
+            desiredHoriDir = 0;
+        }
+
+        if (desiredVertDir != 0 && World.isFree(this.getX(), (int)(y + speed * (desiredVertDir / 2)))) { // Dividir por 2 para ajustar a direção
+            vert_dir = desiredVertDir;
+            hori_dir = 0;
+            desiredVertDir = 0;
+        }
+
+
 		if(hori_dir == 1 && World.isFree((int)(x+speed),this.getY())) {
-			moved_hori = true;
 			x+=speed;
 			sprite_dir = 1;
-			
+
 
 		}
 		else if(hori_dir == -1 && World.isFree((int)(x-speed),this.getY())) {
-			moved_hori = true;
 			x-=speed;
 			sprite_dir = -1;
 
 		}
 		if(vert_dir == -2 && World.isFree(this.getX(),(int)(y-speed))){
-			moved_vert = true;
 			y-=speed;
 			sprite_dir = -2;
 
 		}
 		else if(vert_dir == 2 && World.isFree(this.getX(),(int)(y+speed))){
-			moved_vert = true;
 			y+=speed;
 			sprite_dir = 2;
 
