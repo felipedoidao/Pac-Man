@@ -10,9 +10,9 @@ import com.gcstudios.main.Game;
 public class Ui {
 
 	public void render(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 20));
-		g.drawString("Pontuação: " + Game.pontos, 10, 26);
+		g.drawString("Pontuação: " + Game.pontos, 10, 22);
 	}
 	
 }

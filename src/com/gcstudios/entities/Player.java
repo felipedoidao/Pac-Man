@@ -11,6 +11,7 @@ public class Player extends Entity{
 	
 	public boolean right,up,left,down;
 	public int hori_dir = 0, vert_dir = 0,  sprite_dir = 0;
+	public boolean moved_hori = false, moved_vert = false;
 
 	public BufferedImage sprite_left, sprite_up, sprite_down;
 
@@ -23,29 +24,39 @@ public class Player extends Entity{
 	
 	public void tick(){
 		depth = 1;
+
+		movePlayer();
+		pegarMoeda();
+
+	}
+
+	public void movePlayer(){
+
 		if(hori_dir == 1 && World.isFree((int)(x+speed),this.getY())) {
+			moved_hori = true;
 			x+=speed;
 			sprite_dir = 1;
+			
 
 		}
 		else if(hori_dir == -1 && World.isFree((int)(x-speed),this.getY())) {
+			moved_hori = true;
 			x-=speed;
 			sprite_dir = -1;
 
 		}
 		if(vert_dir == -2 && World.isFree(this.getX(),(int)(y-speed))){
+			moved_vert = true;
 			y-=speed;
 			sprite_dir = -2;
 
 		}
 		else if(vert_dir == 2 && World.isFree(this.getX(),(int)(y+speed))){
+			moved_vert = true;
 			y+=speed;
 			sprite_dir = 2;
 
 		}
-
-		pegarMoeda();
-
 	}
 
 	public void pegarMoeda(){
