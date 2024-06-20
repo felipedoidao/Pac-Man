@@ -14,7 +14,8 @@ import com.gcstudios.world.Vector2i;
 import com.gcstudios.world.World;
 
 public class Entity {
-	
+
+	public static BufferedImage MOEDA = Game.spritesheet.getSprite(16, 16, 16, 16);
 
 	protected double x;
 	protected double y;
@@ -32,7 +33,7 @@ public class Entity {
 	
 	public static Random rand = new Random();
 	
-	public Entity(double x,double y,int width,int height,double speed,BufferedImage sprite){
+	public Entity(double x,double y,int width,int height,int speed,BufferedImage sprite){
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -74,6 +75,10 @@ public class Entity {
 	
 	public int getY() {
 		return (int)this.y;
+	}
+
+	public int getSpd() {
+		return (int)this.speed;
 	}
 	
 	public int getWidth() {

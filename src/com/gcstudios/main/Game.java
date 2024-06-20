@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
-	public static final int WIDTH = 240;
+	public static final int WIDTH = 320;
 	public static final int HEIGHT = 240;
 	public static final int SCALE = 2;
 	
@@ -40,6 +40,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Player player;
+
+	public static int num_moedas = 0;
+	public static int pontos = 0;
 	
 	public Ui ui;
 	
@@ -52,11 +55,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		
 		//Inicializando objetos.
+		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,1,spritesheet.getSprite(32, 0,16,16));
-		world = new World("/level1.png");
+		world = new World("/level2.png");
 		ui = new Ui();
-		entities = new ArrayList<Entity>();
 		
 		entities.add(player);
 		
@@ -164,51 +167,31 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT ||
-				e.getKeyCode() == KeyEvent.VK_D){
-			player.right = true;
-		}else if(e.getKeyCode() == KeyEvent.VK_LEFT ||
-				e.getKeyCode() == KeyEvent.VK_A){
-			player.left = true;
+		if(e.getKeyCode() == KeyEvent.VK_D ){
+			player.hori_dir = 1;
+
+		}else if(e.getKeyCode() == KeyEvent.VK_A){
+			player.hori_dir = -1;
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_UP ||
-				e.getKeyCode() == KeyEvent.VK_W){
-			player.up = true;
+		if(e.getKeyCode() == KeyEvent.VK_W ){
+			player.vert_dir = -2;
 			
-		}else if(e.getKeyCode() == KeyEvent.VK_DOWN ||
-				e.getKeyCode() == KeyEvent.VK_S) {
-			player.down = true;
-			
-			
-			
+		}else if(e.getKeyCode() == KeyEvent.VK_S) {
+			player.vert_dir = 2;
+				
 		}
 	
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT ||
-				e.getKeyCode() == KeyEvent.VK_D){
-			player.right = false;
-		}else if(e.getKeyCode() == KeyEvent.VK_LEFT ||
-				e.getKeyCode() == KeyEvent.VK_A){
-			player.left = false;
-		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_UP ||
-				e.getKeyCode() == KeyEvent.VK_W){
-			player.up = false;
-		}else if(e.getKeyCode() == KeyEvent.VK_DOWN ||
-				e.getKeyCode() == KeyEvent.VK_S) {
-			player.down = false;
-		}
 		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

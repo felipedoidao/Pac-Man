@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import com.gcstudios.entities.Entity;
+import com.gcstudios.entities.Moeda;
 import com.gcstudios.main.Game;
 
 public class World {
@@ -37,6 +40,10 @@ public class World {
 						Game.player.setY(yy*16);
 					}else if(pixelAtual == 0xFFFF0000) {
 						//Instanciar inimigo e adicionar a lista das entities
+					}else if(pixelAtual == 0xFFFFE900) {
+						Moeda moeda = new Moeda(xx*16, yy*16, 16, 16, 0, Entity.MOEDA);
+						Game.entities.add(moeda);
+						Game.num_moedas++;
 					}
 				}
 			}
@@ -47,13 +54,13 @@ public class World {
 	
 	public static boolean isFree(int xnext,int ynext){
 		
-		int x1 = xnext / TILE_SIZE;
-		int y1 = ynext / TILE_SIZE;
+		int x1 = (xnext) / TILE_SIZE;
+		int y1 = (ynext) / TILE_SIZE;
 		
 		int x2 = (xnext+TILE_SIZE-1) / TILE_SIZE;
-		int y2 = ynext / TILE_SIZE;
+		int y2 = (ynext) / TILE_SIZE;
 		
-		int x3 = xnext / TILE_SIZE;
+		int x3 = (xnext) / TILE_SIZE;
 		int y3 = (ynext+TILE_SIZE-1) / TILE_SIZE;
 		
 		int x4 = (xnext+TILE_SIZE-1) / TILE_SIZE;
