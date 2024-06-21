@@ -34,7 +34,7 @@ public class Entity {
 	
 	public static Random rand = new Random();
 	
-	public Entity(double x,double y,int width,int height,int speed,BufferedImage sprite){
+	public Entity( double x, double y, int width, int height, double speed, BufferedImage sprite){
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -101,18 +101,16 @@ public class Entity {
 		if(path != null) {
 			if(path.size() > 0) {
 				Vector2i target = path.get(path.size() - 1).tile;
-				//xprev = x;
-				//yprev = y;
 				if(x < target.x * 16) {
-					x++;
+					this.x += 0.5;
 				}else if(x > target.x * 16) {
-					x--;
+					this.x -= 0.5;
 				}
 				
 				if(y < target.y * 16) {
-					y++;
+					this.y += 0.5;
 				}else if(y > target.y * 16) {
-					y--;
+					this.y -= 0.5;
 				}
 				
 				if(x == target.x * 16 && y == target.y * 16) {
@@ -124,16 +122,16 @@ public class Entity {
 	}
 	
 	public static boolean isColidding(Entity e1,Entity e2){
-		Rectangle e1Mask = new Rectangle(e1.getX(),e1.getY(),e1.getWidth(),e1.getHeight());
-		Rectangle e2Mask = new Rectangle(e2.getX(),e2.getY(),e2.getWidth(),e2.getHeight());
+		Rectangle e1Mask = new Rectangle(e1.getX(), e1.getY(), e1.getWidth(), e1.getHeight());
+		Rectangle e2Mask = new Rectangle(e2.getX(), e2.getY(), e2.getWidth(), e2.getHeight());
 		
 		return e1Mask.intersects(e2Mask);
+
 	}
 	
 	public void render(Graphics g) {
 		g.drawImage(sprite,this.getX() - Camera.x,this.getY() - Camera.y,null);
-		//g.setColor(Color.red);
-		//g.fillRect(this.getX() + maskx - Camera.x,this.getY() + masky - Camera.y,mwidth,mheight);
+
 	}
 	
 }

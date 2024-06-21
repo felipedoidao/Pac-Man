@@ -15,13 +15,15 @@ public class World {
 	public static Tile[] tiles;
 	public static int WIDTH,HEIGHT;
 	public static final int TILE_SIZE = 16;
+
+	public static BufferedImage map;
 	
 	
 	public World(String path){
 
 		try {
 
-			BufferedImage map = ImageIO.read(getClass().getResource(path));
+			map = ImageIO.read(getClass().getResource(path));
 			int[] pixels = new int[map.getWidth() * map.getHeight()];
 			WIDTH = map.getWidth();
 			HEIGHT = map.getHeight();

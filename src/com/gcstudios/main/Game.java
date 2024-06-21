@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 import javax.swing.JFrame;
 
 
@@ -43,11 +45,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 	public static int pontos = 0;
 	public static int num_moedas = 0;
+
+	public static Random rand;
 	
 	
 	public Ui ui;
 	
 	public Game(){
+		rand = new Random();
 		addKeyListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);

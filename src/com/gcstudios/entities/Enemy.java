@@ -9,37 +9,44 @@ import com.gcstudios.world.AStar;
 import com.gcstudios.world.Vector2i;
 
 
-
 public class Enemy extends Entity{
-	
 
-	public Enemy(int x, int y, int width, int height,int speed, BufferedImage sprite) {
+	public Enemy(int x, int y, int width, int height, int speed, BufferedImage sprite) {
 		super(x, y, width, height,speed,sprite);
 	}
 
 	public void tick(){
 		depth = 0;
 		
+		moveEnemy();
+
+	}
+
+	public void moveEnemy(){
+
+		int randomDirectionX = new Random().nextInt((30 -(-30)) + 1) + (-30);
+		int randomDirectionY = new Random().nextInt((30 -(-30)) + 1) + (-30);
+
+		int endX = Game.player.getX() + randomDirectionX;
+		int endY = Game.player.getY() + randomDirectionY;
+
 		if(path == null || path.size() == 0) {
-				Vector2i start = new Vector2i(((int)(x/16)),((int)(y/16)));
-				Vector2i end = new Vector2i(((int)(Game.player.x/16)),((int)(Game.player.y/16)));
+			Vector2i start = new Vector2i(((this.getX() / 16)), ((this.getY() / 16)));
+			Vector2i end = new Vector2i((endX / 16), ((endY / 16)));
+			path = AStar.findPath(Game.world, start, end);
+		}
+	
+		followPath(path);
+		
+		if(x % 16 == 0 && y % 16 == 0) {
+			if(new Random().nextInt(100) < 10) {
+				Vector2i start = new Vector2i(((this.getX() / 16)), ((this.getY() / 16)));
+				Vector2i end = new Vector2i(( endX / 16), (endY / 16));
 				path = AStar.findPath(Game.world, start, end);
 			}
-		
-			followPath(path);
-			
-			if(x % 16 == 0 && y % 16 == 0) {
-				if(new Random().nextInt(100) < 10) {
-					Vector2i start = new Vector2i(((int)(x/16)),((int)(y/16)));
-					Vector2i end = new Vector2i(((int)(Game.player.x/16)),((int)(Game.player.y/16)));
-					path = AStar.findPath(Game.world, start, end);
-				}
-			}
-			
-		
-	}
-	
+		}
 
+	}
 	
 	public void render(Graphics g) {
 		super.render(g);
