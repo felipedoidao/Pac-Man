@@ -10,6 +10,7 @@ public class Tile {
 	public static BufferedImage TILE_FLOOR = Game.spritesheet.getSprite(0,0,16,16);
 
 	public static BufferedImage TILE_WALL = Game.spritesheet.getSprite(16,0,16,16);
+	public static BufferedImage TILE_GATE = Game.spritesheet.getSprite(16*5,16*7,16,16);
 	public static BufferedImage TILE_WALL_DIREITA = Game.spritesheet.getSprite(16,16*9,16,16);
 	public static BufferedImage TILE_WALL_ESQUERDA = Game.spritesheet.getSprite(16*3,16*9,16,16);
 	public static BufferedImage TILE_WALL_BAIXO = Game.spritesheet.getSprite(0,16*9,16,16);

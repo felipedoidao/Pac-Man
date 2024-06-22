@@ -47,6 +47,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static int num_moedas = 0;
 
 	public static Random rand;
+
+	public static int tempo = 0;
+	public static int resetTimer = 0;
+
+	public static String gameMode = "Win";
 	
 	
 	public Ui ui;
@@ -102,13 +107,32 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	}
 	
 	public void tick(){
+		if(gameMode == "Normal"){
+			for(int i = 0; i < entities.size(); i++) {
+				Entity e = entities.get(i);
+				e.tick();
+			}
 		
-		for(int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
-			e.tick();
-		}
+			if(tempo < 300 && World.locked){
+				tempo ++;
+	
+			}else{
+				tempo = 0;
+				World.locked = false;
+			}
+	
+			if(player.dead){
+				resetTimer ++;
+				if(resetTimer >= 60){
+					resetTimer = 0;
+					World.restartGame();
+				}
+			}
 
-		
+			if(pontos == num_moedas){
+				gameMode = "Win";
+			}
+		}
 		
 	}
 	
@@ -186,6 +210,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
             player.desiredVertDir = 2;
             player.desiredHoriDir = 0;
         }
+
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			if(gameMode == "Win")
+				World.restartGame();
+		}
 	
 	}
 

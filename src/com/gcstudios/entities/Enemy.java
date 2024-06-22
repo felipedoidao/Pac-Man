@@ -7,6 +7,7 @@ import java.util.Random;
 import com.gcstudios.main.Game;
 import com.gcstudios.world.AStar;
 import com.gcstudios.world.Vector2i;
+import com.gcstudios.world.World;
 
 
 public class Enemy extends Entity{
@@ -35,8 +36,9 @@ public class Enemy extends Entity{
 			Vector2i end = new Vector2i((endX / 16), ((endY / 16)));
 			path = AStar.findPath(Game.world, start, end);
 		}
-	
-		followPath(path);
+	    
+		if(World.locked == false && Game.player.dead == false)
+			followPath(path);
 		
 		if(x % 16 == 0 && y % 16 == 0) {
 			if(new Random().nextInt(100) < 10) {

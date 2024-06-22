@@ -3,11 +3,15 @@ package com.gcstudios.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 import com.gcstudios.entities.Enemy;
 import com.gcstudios.entities.Entity;
 import com.gcstudios.entities.Moeda;
+import com.gcstudios.entities.Player;
+import com.gcstudios.graficos.Spritesheet;
 import com.gcstudios.main.Game;
 
 public class World {
@@ -17,6 +21,7 @@ public class World {
 	public static final int TILE_SIZE = 16;
 
 	public static BufferedImage map;
+	public static Boolean locked = true;
 	
 	
 	public World(String path){
@@ -129,6 +134,8 @@ public class World {
 						Game.entities.add(moeda);
 						Game.num_moedas++;
 
+					}else if(pixelAtual == 0xFFFFC4EE){
+						tiles[xx + (yy * WIDTH)] = new Gate(xx * 16, yy * 16, Tile.TILE_GATE);
 					}
 				}
 			}
@@ -154,12 +161,25 @@ public class World {
 		return !((tiles[x1 + (y1*World.WIDTH)] instanceof WallTile) ||
 				(tiles[x2 + (y2*World.WIDTH)] instanceof WallTile) ||
 				(tiles[x3 + (y3*World.WIDTH)] instanceof WallTile) ||
-				(tiles[x4 + (y4*World.WIDTH)] instanceof WallTile));
+				(tiles[x4 + (y4*World.WIDTH)] instanceof WallTile) ||
+				(tiles[x1 + (y1*World.WIDTH)] instanceof Gate) ||
+				(tiles[x2 + (y2*World.WIDTH)] instanceof Gate) ||
+				(tiles[x3 + (y3*World.WIDTH)] instanceof Gate) ||
+				(tiles[x4 + (y4*World.WIDTH)] instanceof Gate));
 	}
 	
-	public static void restartGame(String level){
-		new Game();
-		return;
+	public static void restartGame(){
+		Game.gameMode = "Normal";
+		Game.pontos = 0;
+		Game.num_moedas = 0;
+		locked = true;
+		Game.entities.clear();
+        Game.entities = new ArrayList<Entity>();
+        Game.spritesheet = new Spritesheet("/spritesheet.png");
+        Game.player = new Player(0,0,16,16,1, Game.spritesheet.getSprite(32, 0,16,16));
+        Game.entities.add(Game.player);
+        Game.world = new World("/level2.png");
+        return;
 	}
 	
 	public void render(Graphics g){

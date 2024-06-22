@@ -14,14 +14,18 @@ public class Player extends Entity{
 	public int desiredHoriDir = 0;
     public int desiredVertDir = 0;
 
+	public boolean dead = false;
+
 	public BufferedImage sprite_left, sprite_up, sprite_down;
 
 	private int frames = 0, maxFrames = 5, index = 0, maxIndex = 1;
+	private int deadFrames = 0, maxdeadFrames = 10, deadIndex = 0, maxdeadIndex = 5;
 
 	private BufferedImage[] rightPlayer;
     private BufferedImage[] leftPlayer;
 	private BufferedImage[] upPlayer;
     private BufferedImage[] downPlayer;
+	private BufferedImage[] playerDeath;
 
 	public Player(int x, int y, int width, int height,double speed,BufferedImage sprite) {
 		super(x, y, width, height,speed,sprite);
@@ -33,6 +37,7 @@ public class Player extends Entity{
 		leftPlayer = new BufferedImage[2];
 		upPlayer = new BufferedImage[2];
 		downPlayer = new BufferedImage[2];
+		playerDeath = new BufferedImage[6];
 
 		for(int i=0; i<=1; i++){
             rightPlayer[i] = Game.spritesheet.getSprite(16*2 + (i*16), 0, 16, 16);
@@ -46,24 +51,45 @@ public class Player extends Entity{
         for(int i=0; i<=1; i++){
             downPlayer[i] = Game.spritesheet.getSprite(16*2 + (i*16), 32, 16, 16);
         }
+		for(int i=0; i<=5; i++){
+            playerDeath[i] = Game.spritesheet.getSprite(0 + (i*16), 16*4, 16, 16);
+        }
 
 	}
 	
 	public void tick(){
 		depth = 1;
 
-		movePlayer();
-		pegarMoeda();
+		collidingEnemy();
+		animFrames();
+		if(dead == false)
+			movePlayer();
+		takingDots();
+		
 
-		frames++;
-        if(frames >= maxFrames){
-            frames = 0;
-            index++;
-            if(index > maxIndex){
-                index = 0;
-            }
+	}
+
+	public void animFrames(){
+		if(dead == false){
+			frames++;
+        	if(frames >= maxFrames){
+            	frames = 0;
+            	index++;
+            	if(index > maxIndex){
+                	index = 0;
+            	}
+			}
+		}else{
+			deadFrames++;
+        	if(deadFrames >= maxdeadFrames){
+            	deadFrames = 0;
+            	deadIndex++;
+            	if(deadIndex > maxdeadIndex){
+                	deadIndex= 0;
+            	}
+			}
 		}
-
+		
 	}
 
 	public void movePlayer(){
@@ -104,14 +130,25 @@ public class Player extends Entity{
 		}
 	}
 
-	public void pegarMoeda(){
+	public void takingDots(){
 		for(int i=0; i < Game.entities.size(); i++){
 			Entity current = Game.entities.get(i);
 			if(current instanceof Moeda){
 				if(Entity.isColidding(this, current)){
 					Game.entities.remove(i);
 					Game.pontos++;
-					Game.num_moedas--;
+					return;
+				}
+			}
+		}
+	}
+
+	public void collidingEnemy(){
+		for(int i=0; i < Game.entities.size(); i++){
+			Entity current = Game.entities.get(i);
+			if(current instanceof Enemy){
+				if(Entity.isColidding(this, current)){
+					dead = true;
 					return;
 				}
 			}
@@ -119,25 +156,30 @@ public class Player extends Entity{
 	}
 
 	public void render(Graphics g){
-		if(sprite_dir == 1 || sprite_dir == 0){
-			g.drawImage(rightPlayer[index], this.getX(), this.getY(), null);
-			//super.render(g);
-
-		}else if(sprite_dir == -1){
-			g.drawImage(leftPlayer[index], this.getX(), this.getY(), null);
-			//g.drawImage(sprite_left,this.getX() - Camera.x,this.getY() - Camera.y,null);
-
+		if(dead == false){
+			if(sprite_dir == 1 || sprite_dir == 0){
+				g.drawImage(rightPlayer[index], this.getX(), this.getY(), null);
+				
+	
+			}else if(sprite_dir == -1){
+				g.drawImage(leftPlayer[index], this.getX(), this.getY(), null);
+				
+	
+			}
+			else if(sprite_dir == -2){
+				g.drawImage(upPlayer[index], this.getX(), this.getY(), null);
+				
+	
+			}
+			else if(sprite_dir == 2){
+				g.drawImage(downPlayer[index], this.getX(), this.getY(), null);
+				
+	
+			}
+		}else {
+			g.drawImage(playerDeath[deadIndex], this.getX(), this.getY(), null);
 		}
-		else if(sprite_dir == -2){
-			g.drawImage(upPlayer[index], this.getX(), this.getY(), null);
-			//g.drawImage(sprite_up,this.getX() - Camera.x,this.getY() - Camera.y,null);
 
-		}
-		else if(sprite_dir == 2){
-			g.drawImage(downPlayer[index], this.getX(), this.getY(), null);
-			//g.drawImage(sprite_down,this.getX() - Camera.x,this.getY() - Camera.y,null);
-
-		}
 	}
 
 
