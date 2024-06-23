@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static int tempo = 0;
 	public static int resetTimer = 0;
 
-	public static String gameMode = "Win";
+	public static String gameMode = "Normal";
 	
 	
 	public Ui ui;
